@@ -23,7 +23,7 @@ interface IProps {
 }
 
 
-function EditorComponent(props: IProps) {
+function EditorComponent({}: IProps) {
   const [value, setValue] = useState<Value>(initialValue)
   let editor;
   const ref = ed => {
@@ -224,7 +224,7 @@ function EditorComponent(props: IProps) {
     }
   }
 
-  return (<>
+  return (<div className={"editor"}>
     <Toolbar>
       {renderMarkButton('bold', 'format_bold')}
       {renderMarkButton('italic', 'format_italic')}
@@ -237,16 +237,17 @@ function EditorComponent(props: IProps) {
       {renderBlockButton('bulleted-list', 'format_list_bulleted')}
     </Toolbar>
     <Editor
-      ref={ref}
       spellCheck
       autoFocus
       placeholder='Enter some plain text...'
       value={value}
+      ref={ref}
       onChange={onChange}
+      onKeyDown={onKeyDown}
       renderBlock={renderBlock}
       renderMark={renderMark}
     />
-  </>)
+  </div>)
 }
 export default EditorComponent
 

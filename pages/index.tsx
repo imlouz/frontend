@@ -16,11 +16,13 @@ export default function IndexPage(props: IProps) {
             <Head>
                 <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
             </Head>
-            <h1>Hello World</h1>
-            <Link href='/about'><a>About us</a></Link>
-            <div>
+            <h1>Tekshir.uz</h1>
+            <div className="flex-box">
+                <EditorComponent />
                 <EditorComponent />
             </div>
+
+            <Link href='/about'><a>About us</a></Link>
         </>
     )
 }

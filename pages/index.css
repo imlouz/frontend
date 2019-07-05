@@ -6,6 +6,7 @@ textarea {
   background: #eee;
 }
 
+
 body {
   margin: 0;
 }
@@ -72,4 +73,8 @@ input:focus {
 
 [data-slate-editor] > * + * {
   margin-top: 1em;
+}
+
+.flex-box{
+  display: flex;
 }
