@@ -1,11 +1,11 @@
 {
-  "compileOnSave": false,
   "compilerOptions": {
     "target": "esnext",
     "module": "esnext",
     "jsx": "preserve",
     "allowJs": true,
     "moduleResolution": "node",
+    "resolveJsonModule": true,
     "allowSyntheticDefaultImports": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
@@ -22,5 +22,5 @@
       "es2015",
       "es2016"
     ]
-  }
+  },
 }
