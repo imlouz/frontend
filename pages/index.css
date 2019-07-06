@@ -74,7 +74,3 @@ input:focus {
 [data-slate-editor] > * + * {
   margin-top: 1em;
 }
-
-.flex-box{
-  display: flex;
-}

@@ -1,10 +1,136 @@
-import React, {useState} from 'react'
+import React from 'react'
 import {Editor} from 'slate-react'
 import {Value} from 'slate'
 import {isKeyHotkey} from 'is-hotkey'
-import {Button, Icon, Toolbar} from './editorComponents'
-import initialJson from './editor_value.json'
+// import {Button, Icon, Toolbar} from './editorComponents'
+import {cx, css} from 'emotion'
 
+export const Button = React.forwardRef(
+    ({className, active, reversed, ...props}: any, ref) => (
+        <span
+            {...props}
+            ref={ref}
+            className={cx(
+                className,
+                css`
+          cursor: pointer;
+          color: ${reversed
+                    ? active ? 'white' : '#aaa'
+                    : active ? 'black' : '#ccc'};
+        `
+            )}
+        />
+    )
+)
+
+export const EditorValue = React.forwardRef(
+    ({className, value, ...props}: any, ref) => {
+        const textLines = value.document.nodes
+            .map(node => node.text)
+            .toArray()
+            .join('\n')
+        return (
+            <div
+                ref={ref}
+                {...props}
+                className={cx(
+                    className,
+                    css`
+            margin: 30px -20px 0;
+          `
+                )}
+            >
+                <div
+                    className={css`
+            font-size: 14px;
+            padding: 5px 20px;
+            color: #404040;
+            border-top: 2px solid #eeeeee;
+            background: #f8f8f8;
+          `}
+                >
+                    Slate's value as text
+                </div>
+                <div
+                    className={css`
+            color: #404040;
+            font: 12px monospace;
+            white-space: pre-wrap;
+            padding: 10px 20px;
+            div {
+              margin: 0 0 0.5em;
+            }
+          `}
+                >
+                    {textLines}
+                </div>
+            </div>
+        )
+    }
+)
+export const Icon = React.forwardRef(({className, ...props}: any, ref) => (
+    <span
+        {...props}
+        ref={ref}
+        className={cx(
+            'material-icons',
+            className,
+            css`
+        font-size: 18px;
+        vertical-align: text-bottom;
+      `
+        )}
+    />
+))
+export const Instruction = React.forwardRef(({className, ...props}: any, ref) => (
+    <div
+        {...props}
+        ref={ref}
+        className={cx(
+            className,
+            css`
+        white-space: pre-wrap;
+        margin: 0 -20px 10px;
+        padding: 10px 20px;
+        font-size: 14px;
+        background: #f8f8e8;
+      `
+        )}
+    />
+))
+export const Menu = React.forwardRef(({className, ...props}: any, ref) => (
+    <div
+        {...props}
+        ref={ref}
+        className={cx(
+            className,
+            css`
+        & > * {
+          display: inline-block;
+        }
+        & > * + * {
+          margin-left: 15px;
+        }
+      `
+        )}
+    />
+))
+export const Toolbar = React.forwardRef(({className, ...props}: any, ref) => (
+    <Menu
+        {...props}
+        ref={ref}
+        className={cx(
+            className,
+            css`
+        position: relative;
+        padding: 1px 18px 17px;
+        margin: 0 -20px;
+        border-bottom: 2px solid #eee;
+        margin-bottom: 20px;
+      `
+        )}
+    />
+))
 const DEFAULT_NODE = 'paragraph'
 
 /**
@@ -18,21 +144,16 @@ const isItalicHotkey = isKeyHotkey('mod+i')
 const isUnderlinedHotkey = isKeyHotkey('mod+u')
 const isCodeHotkey = isKeyHotkey('mod+`')
 
-const initialValue = Value.fromJSON(initialJson)
-
 interface IProps {
-
+    value: Value,
+    onChange: (Value) => void
 }
 
 
-function EditorComponent({}: IProps) {
-    const [value, setValue] = useState<Value>(initialValue)
+function EditorComponent({value, onChange}: IProps) {
     let editor;
     const ref = ed => {
         editor = ed
-    }
-    const onChange = ({value}) => {
-        setValue(value)
     }
     const hasMark = type => {
         return value.activeMarks.some(mark => mark.type === type)
