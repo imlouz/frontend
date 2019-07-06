@@ -146,15 +146,17 @@ const isCodeHotkey = isKeyHotkey('mod+`')
 
 interface IProps {
     value: Value,
-    onChange: (Value) => void
+    editor: any,
+    readOnly?: boolean,
+    onChange?: (Value) => void
+    onKeyUp?: (Value) => void
 }
 
 
-function EditorComponent({value, onChange}: IProps) {
-    let editor;
-    const ref = ed => {
-        editor = ed
-    }
+function EditorComponent({value, onChange,readOnly=false, onKeyUp, editor}: IProps) {
+    // const ref = ed => {
+    //     editor = ed
+    // }
     const hasMark = type => {
         return value.activeMarks.some(mark => mark.type === type)
     }
@@ -180,7 +182,7 @@ function EditorComponent({value, onChange}: IProps) {
         }
 
         event.preventDefault()
-        editor.toggleMark(mark)
+        editor.current.toggleMark(mark)
     }
 
     /**
@@ -192,7 +194,7 @@ function EditorComponent({value, onChange}: IProps) {
 
     const onClickMark = (event, type) => {
         event.preventDefault()
-        editor.toggleMark(type)
+        editor.current.toggleMark(type)
     }
 
     /**
@@ -205,7 +207,7 @@ function EditorComponent({value, onChange}: IProps) {
     const onClickBlock = (event, type) => {
         event.preventDefault()
 
-        const {value} = editor
+        const {value} = editor.current
         const {document} = value
 
         // Handle everything but list buttons.
@@ -219,7 +221,7 @@ function EditorComponent({value, onChange}: IProps) {
                     .unwrapBlock('bulleted-list')
                     .unwrapBlock('numbered-list')
             } else {
-                editor.setBlocks(isActive ? DEFAULT_NODE : type)
+                editor.current.setBlocks(isActive ? DEFAULT_NODE : type)
             }
         } else {
             // Handle the extra wrapping required for list buttons.
@@ -240,7 +242,7 @@ function EditorComponent({value, onChange}: IProps) {
                     )
                     .wrapBlock(type)
             } else {
-                editor.setBlocks('list-item').wrapBlock(type)
+                editor.current.setBlocks('list-item').wrapBlock(type)
             }
         }
     }
@@ -364,12 +366,14 @@ function EditorComponent({value, onChange}: IProps) {
         </Toolbar>
         <Editor
             spellCheck
+            readOnly={readOnly}
             autoFocus
             placeholder='Enter some plain text...'
             value={value}
-            ref={ref}
+            ref={editor}
             onChange={onChange}
             onKeyDown={onKeyDown}
+            onKeyUp={onKeyUp}
             renderBlock={renderBlock}
             renderMark={renderMark}
         />
