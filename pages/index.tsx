@@ -16,7 +16,7 @@ export default function IndexPage(): JSX.Element {
     const rightEditor = useRef<any>();
 
     const convertToRight = useCallback(debounce(
-        editorUtils.converyToCrylic(leftEditor, rightEditor), 500), [leftEditor, rightEditor])
+        editorUtils.converyToCrylic(leftEditor, rightEditor), 300), [])
 
     const onLeftChange = useCallback(({value}) => {
         setLeftValue(value)
@@ -30,7 +30,7 @@ export default function IndexPage(): JSX.Element {
                         editor={leftEditor}
                         value={leftValue}
                         onChange={onLeftChange}
-                        onKeyUp={convertToRight}
+                        onContentChange={convertToRight}
                     />
                 </div>
                 <div style={{width: '50%', paddingLeft: 60}}>

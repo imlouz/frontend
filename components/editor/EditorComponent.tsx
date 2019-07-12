@@ -21,12 +21,12 @@ interface IProps {
     value: Value,
     editor: any,
     readOnly?: boolean,
-    onChange?: (Value) => void
-    onKeyUp?: (Value) => void
+    onChange?: (Value) => void,
+    onContentChange?: () => void
 }
 
 
-function EditorComponent({value, onChange,readOnly=false, onKeyUp, editor}: IProps) :JSX.Element{
+function EditorComponent({value, onChange, readOnly = false, editor, onContentChange}: IProps): JSX.Element {
     // const ref = ed => {
     //     editor = ed
     // }
@@ -39,7 +39,7 @@ function EditorComponent({value, onChange,readOnly=false, onKeyUp, editor}: IPro
     }
 
 
-    const onKeyDown = (event, editor, next) => {
+    const onKeyDown = (event, tempEditor, next) => {
         let mark
 
         if (isBoldHotkey(event)) {
@@ -55,7 +55,13 @@ function EditorComponent({value, onChange,readOnly=false, onKeyUp, editor}: IPro
         }
 
         event.preventDefault()
-        editor.current.toggleMark(mark)
+        tempEditor.toggleMark(mark)
+    }
+
+    const onKeyUp = (event) => {
+        event.preventDefault()
+
+        onContentChange()
     }
 
     /**
@@ -68,6 +74,7 @@ function EditorComponent({value, onChange,readOnly=false, onKeyUp, editor}: IPro
     const onClickMark = (event, type) => {
         event.preventDefault()
         editor.current.toggleMark(type)
+        onContentChange()
     }
 
     /**
@@ -79,8 +86,8 @@ function EditorComponent({value, onChange,readOnly=false, onKeyUp, editor}: IPro
 
     const onClickBlock = (event, type) => {
         event.preventDefault()
-
-        const {value} = editor.current
+        const tempEditor = editor.current;
+        const {value} = tempEditor
         const {document} = value
 
         // Handle everything but list buttons.
@@ -89,12 +96,12 @@ function EditorComponent({value, onChange,readOnly=false, onKeyUp, editor}: IPro
             const isList = hasBlock('list-item')
 
             if (isList) {
-                editor
+                tempEditor
                     .setBlocks(isActive ? DEFAULT_NODE : type)
                     .unwrapBlock('bulleted-list')
                     .unwrapBlock('numbered-list')
             } else {
-                editor.current.setBlocks(isActive ? DEFAULT_NODE : type)
+                tempEditor.setBlocks(isActive ? DEFAULT_NODE : type)
             }
         } else {
             // Handle the extra wrapping required for list buttons.
@@ -104,20 +111,22 @@ function EditorComponent({value, onChange,readOnly=false, onKeyUp, editor}: IPro
             })
 
             if (isList && isType) {
-                editor
+                tempEditor
                     .setBlocks(DEFAULT_NODE)
                     .unwrapBlock('bulleted-list')
                     .unwrapBlock('numbered-list')
             } else if (isList) {
-                editor
+                tempEditor
                     .unwrapBlock(
                         type === 'bulleted-list' ? 'numbered-list' : 'bulleted-list'
                     )
                     .wrapBlock(type)
             } else {
-                editor.current.setBlocks('list-item').wrapBlock(type)
+                tempEditor.setBlocks('list-item').wrapBlock(type)
             }
         }
+
+        onContentChange()
     }
     /**
      * Render a mark-toggling toolbar button.
@@ -174,12 +183,12 @@ function EditorComponent({value, onChange,readOnly=false, onKeyUp, editor}: IPro
      * Render a Slate block.
      *
      * @param {Object} props
-     * @param editor
+     * @param tempEditor
      * @param next
      * @return {Element}
      */
 
-    const renderBlock = (props, editor, next) => {
+    const renderBlock = (props, tempEditor, next) => {
         const {attributes, children, node} = props
         // console.log(editor)
         switch (node.type) {
@@ -207,7 +216,7 @@ function EditorComponent({value, onChange,readOnly=false, onKeyUp, editor}: IPro
      * @return {Element}
      */
 
-    const renderMark = (props, editor, next) => {
+    const renderMark = (props, tempEditor, next) => {
         const {children, mark, attributes} = props
         // console.log(editor)
 

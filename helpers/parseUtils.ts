@@ -411,7 +411,6 @@ export const parseToLatin = (crylic_text: string = ""): string => {
     let result_text: string = ""
 
     crylic_text = parseRussianTermsToLatin(crylic_text)
-    debugger
 
     crylic_text = crylic_text.replace(/([с])ҳ/ig, `$1${SYMBOL_TUTUQ}h`)
     crylic_text = crylic_text.replace(/([ў])ъ/ig, '$1')
