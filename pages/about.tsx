@@ -6,7 +6,7 @@ interface IProps {
 
 }
 
-export default function IndexPage(props: IProps) {
+export default function IndexPage(props: IProps): JSX.Element {
     console.log(props)
     return (
         <MainLayout>

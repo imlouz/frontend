@@ -1,18 +1,19 @@
 import React from "react";
 import Link from "next/link"
+import IndexStyles from "./IndexStyles";
 
 interface IProps {
     children: React.ReactChildren | React.ReactChild | React.ReactNode
 }
 
-export default function MainLayout(props: IProps) {
+export default function MainLayout(props: IProps):JSX.Element {
     return <div>
         {props.children}
         <footer>
             <nav>
                 <ul>
-                    <li><Link><a href="/">Bosh sahifa</a></Link></li>
-                    <li><Link><a href="/about">Loyiha haqida</a></Link></li>
+                    <li><Link href="/"><a >Bosh sahifa</a></Link></li>
+                    <li><Link href="/about"><a >Loyiha haqida</a></Link></li>
                 </ul>
                 <style jsx>{`
                     ul{
@@ -29,5 +30,6 @@ export default function MainLayout(props: IProps) {
                 `}</style>
             </nav>
         </footer>
+        <IndexStyles/>
     </div>
 }
