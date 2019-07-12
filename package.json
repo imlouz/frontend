@@ -4,10 +4,17 @@
   "main": "index.js",
   "license": "",
   "scripts": {
-    "dev": "next",
-    "build": "next build",
-    "start": "NODE_ENV=production node .build/server",
-    "type-check": "tsc"
+    "dev": "next src",
+    "build": "next build src",
+    "start": "next start src",
+    "type-check": "tsc",
+    "prettier": "prettier --write src/**/*.{ts,tsx}",
+    "format-all": "prettier --check src/**/*.{ts,tsx}",
+    "husky": {
+      "hooks": {
+        "pre-commit": "pretty-quick --staged"
+      }
+    }
   },
   "dependencies": {
     "emotion": "^10.0.14",
@@ -26,6 +33,9 @@
     "@types/node": "^12.6.2",
     "@types/react": "^16.8.23",
     "@types/react-dom": "^16.8.4",
+    "husky": "^3.0.0",
+    "prettier": "1.18.2",
+    "pretty-quick": "^1.11.1",
     "ts-node": "^8.3.0"
   }
 }

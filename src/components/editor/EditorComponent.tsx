@@ -1,10 +1,10 @@
-import React from 'react'
-import {Editor} from 'slate-react'
-import {Value} from 'slate'
-import {isKeyHotkey} from 'is-hotkey'
-import {Button, Icon, Toolbar} from './EditorComponentHelper'
+import React from "react"
+import { Editor } from "slate-react"
+import { Value } from "slate"
+import { isKeyHotkey } from "is-hotkey"
+import { Button, Icon, Toolbar } from "./EditorComponentHelper"
 
-const DEFAULT_NODE = 'paragraph'
+const DEFAULT_NODE = "paragraph"
 
 /**
  * Define hotkey matchers.
@@ -12,21 +12,26 @@ const DEFAULT_NODE = 'paragraph'
  * @type {Function}
  */
 
-const isBoldHotkey = isKeyHotkey('mod+b')
-const isItalicHotkey = isKeyHotkey('mod+i')
-const isUnderlinedHotkey = isKeyHotkey('mod+u')
-const isCodeHotkey = isKeyHotkey('mod+`')
+const isBoldHotkey = isKeyHotkey("mod+b")
+const isItalicHotkey = isKeyHotkey("mod+i")
+const isUnderlinedHotkey = isKeyHotkey("mod+u")
+const isCodeHotkey = isKeyHotkey("mod+`")
 
 interface IProps {
-    value: Value,
-    editor: any,
-    readOnly?: boolean,
-    onChange?: (Value) => void,
+    value: Value
+    editor: any
+    readOnly?: boolean
+    onChange?: (Value) => void
     onContentChange?: () => void
 }
 
-
-function EditorComponent({value, onChange, readOnly = false, editor, onContentChange}: IProps): JSX.Element {
+function EditorComponent({
+    value,
+    onChange,
+    readOnly = false,
+    editor,
+    onContentChange
+}: IProps): JSX.Element {
     // const ref = ed => {
     //     editor = ed
     // }
@@ -38,18 +43,17 @@ function EditorComponent({value, onChange, readOnly = false, editor, onContentCh
         return value.blocks.some(node => node.type === type)
     }
 
-
     const onKeyDown = (event, tempEditor, next) => {
         let mark
 
         if (isBoldHotkey(event)) {
-            mark = 'bold'
+            mark = "bold"
         } else if (isItalicHotkey(event)) {
-            mark = 'italic'
+            mark = "italic"
         } else if (isUnderlinedHotkey(event)) {
-            mark = 'underlined'
+            mark = "underlined"
         } else if (isCodeHotkey(event)) {
-            mark = 'code'
+            mark = "code"
         } else {
             return next()
         }
@@ -58,7 +62,7 @@ function EditorComponent({value, onChange, readOnly = false, editor, onContentCh
         tempEditor.toggleMark(mark)
     }
 
-    const onKeyUp = (event) => {
+    const onKeyUp = event => {
         event.preventDefault()
 
         onContentChange()
@@ -86,26 +90,26 @@ function EditorComponent({value, onChange, readOnly = false, editor, onContentCh
 
     const onClickBlock = (event, type) => {
         event.preventDefault()
-        const tempEditor = editor.current;
-        const {value} = tempEditor
-        const {document} = value
+        const tempEditor = editor.current
+        const { value } = tempEditor
+        const { document } = value
 
         // Handle everything but list buttons.
-        if (type !== 'bulleted-list' && type !== 'numbered-list') {
+        if (type !== "bulleted-list" && type !== "numbered-list") {
             const isActive = hasBlock(type)
-            const isList = hasBlock('list-item')
+            const isList = hasBlock("list-item")
 
             if (isList) {
                 tempEditor
                     .setBlocks(isActive ? DEFAULT_NODE : type)
-                    .unwrapBlock('bulleted-list')
-                    .unwrapBlock('numbered-list')
+                    .unwrapBlock("bulleted-list")
+                    .unwrapBlock("numbered-list")
             } else {
                 tempEditor.setBlocks(isActive ? DEFAULT_NODE : type)
             }
         } else {
             // Handle the extra wrapping required for list buttons.
-            const isList = hasBlock('list-item')
+            const isList = hasBlock("list-item")
             const isType = value.blocks.some(block => {
                 return !!document.getClosest(block.key, parent => parent.type === type)
             })
@@ -113,16 +117,14 @@ function EditorComponent({value, onChange, readOnly = false, editor, onContentCh
             if (isList && isType) {
                 tempEditor
                     .setBlocks(DEFAULT_NODE)
-                    .unwrapBlock('bulleted-list')
-                    .unwrapBlock('numbered-list')
+                    .unwrapBlock("bulleted-list")
+                    .unwrapBlock("numbered-list")
             } else if (isList) {
                 tempEditor
-                    .unwrapBlock(
-                        type === 'bulleted-list' ? 'numbered-list' : 'bulleted-list'
-                    )
+                    .unwrapBlock(type === "bulleted-list" ? "numbered-list" : "bulleted-list")
                     .wrapBlock(type)
             } else {
-                tempEditor.setBlocks('list-item').wrapBlock(type)
+                tempEditor.setBlocks("list-item").wrapBlock(type)
             }
         }
 
@@ -140,10 +142,7 @@ function EditorComponent({value, onChange, readOnly = false, editor, onContentCh
         const isActive = hasMark(type)
 
         return (
-            <Button
-                active={isActive}
-                onMouseDown={event => onClickMark(event, type)}
-            >
+            <Button active={isActive} onMouseDown={event => onClickMark(event, type)}>
                 <Icon>{icon}</Icon>
             </Button>
         )
@@ -160,20 +159,17 @@ function EditorComponent({value, onChange, readOnly = false, editor, onContentCh
     const renderBlockButton = (type, icon) => {
         let isActive = hasBlock(type)
 
-        if (['numbered-list', 'bulleted-list'].includes(type)) {
-            const {document, blocks} = value
+        if (["numbered-list", "bulleted-list"].includes(type)) {
+            const { document, blocks } = value
 
             if (blocks.size > 0) {
                 const parent: any = document.getParent(blocks.first().key)
-                isActive = hasBlock('list-item') && parent && parent.type === type
+                isActive = hasBlock("list-item") && parent && parent.type === type
             }
         }
 
         return (
-            <Button
-                active={isActive}
-                onMouseDown={event => onClickBlock(event, type)}
-            >
+            <Button active={isActive} onMouseDown={event => onClickBlock(event, type)}>
                 <Icon>{icon}</Icon>
             </Button>
         )
@@ -189,20 +185,20 @@ function EditorComponent({value, onChange, readOnly = false, editor, onContentCh
      */
 
     const renderBlock = (props, tempEditor, next) => {
-        const {attributes, children, node} = props
+        const { attributes, children, node } = props
         // console.log(editor)
         switch (node.type) {
-            case 'block-quote':
+            case "block-quote":
                 return <blockquote {...attributes}>{children}</blockquote>
-            case 'bulleted-list':
+            case "bulleted-list":
                 return <ul {...attributes}>{children}</ul>
-            case 'heading-one':
+            case "heading-one":
                 return <h1 {...attributes}>{children}</h1>
-            case 'heading-two':
+            case "heading-two":
                 return <h2 {...attributes}>{children}</h2>
-            case 'list-item':
+            case "list-item":
                 return <li {...attributes}>{children}</li>
-            case 'numbered-list':
+            case "numbered-list":
                 return <ol {...attributes}>{children}</ol>
             default:
                 return next()
@@ -217,58 +213,53 @@ function EditorComponent({value, onChange, readOnly = false, editor, onContentCh
      */
 
     const renderMark = (props, tempEditor, next) => {
-        const {children, mark, attributes} = props
+        const { children, mark, attributes } = props
         // console.log(editor)
 
         switch (mark.type) {
-            case 'bold':
+            case "bold":
                 return <strong {...attributes}>{children}</strong>
-            case 'code':
+            case "code":
                 return <code {...attributes}>{children}</code>
-            case 'italic':
+            case "italic":
                 return <em {...attributes}>{children}</em>
-            case 'underlined':
+            case "underlined":
                 return <u {...attributes}>{children}</u>
             default:
                 return next()
         }
     }
 
-    return (<div className={"editor"}>
-        {!readOnly && <Toolbar>
-            {renderMarkButton('bold', 'format_bold')}
-            {renderMarkButton('italic', 'format_italic')}
-            {renderMarkButton('underlined', 'format_underlined')}
-            {renderMarkButton('code', 'code')}
-            {renderBlockButton('heading-one', 'looks_one')}
-            {renderBlockButton('heading-two', 'looks_two')}
-            {renderBlockButton('block-quote', 'format_quote')}
-            {renderBlockButton('numbered-list', 'format_list_numbered')}
-            {renderBlockButton('bulleted-list', 'format_list_bulleted')}
-        </Toolbar>}
-        <Editor
-            spellCheck
-            readOnly={readOnly}
-            autoFocus
-            placeholder='Enter some plain text...'
-            value={value}
-            ref={editor}
-            onChange={onChange}
-            onKeyDown={onKeyDown}
-            onKeyUp={onKeyUp}
-            renderBlock={renderBlock}
-            renderMark={renderMark}
-        />
-    </div>)
+    return (
+        <div className={"editor"}>
+            {!readOnly && (
+                <Toolbar>
+                    {renderMarkButton("bold", "format_bold")}
+                    {renderMarkButton("italic", "format_italic")}
+                    {renderMarkButton("underlined", "format_underlined")}
+                    {renderMarkButton("code", "code")}
+                    {renderBlockButton("heading-one", "looks_one")}
+                    {renderBlockButton("heading-two", "looks_two")}
+                    {renderBlockButton("block-quote", "format_quote")}
+                    {renderBlockButton("numbered-list", "format_list_numbered")}
+                    {renderBlockButton("bulleted-list", "format_list_bulleted")}
+                </Toolbar>
+            )}
+            <Editor
+                spellCheck
+                readOnly={readOnly}
+                autoFocus
+                placeholder="Enter some plain text..."
+                value={value}
+                ref={editor}
+                onChange={onChange}
+                onKeyDown={onKeyDown}
+                onKeyUp={onKeyUp}
+                renderBlock={renderBlock}
+                renderMark={renderMark}
+            />
+        </div>
+    )
 }
 
 export default EditorComponent
-
-
-
-
-
-
-
-
-
