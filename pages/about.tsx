@@ -7,11 +7,10 @@ interface IProps {
 }
 
 export default function IndexPage(props: IProps): JSX.Element {
-    console.log(props)
+    // console.log(props)
     return (
-        <MainLayout>
-            <h1>About Project</h1>
-            <Link href='/'><a>Home page</a></Link>
+        <MainLayout pageTitle={"Loyiha haqida"}>
+            <Link href='/'><a>Bosh sahifa</a></Link>
         </MainLayout>
     )
 }

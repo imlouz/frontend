@@ -1,19 +1,31 @@
 import React from "react";
 import Link from "next/link"
-import IndexStyles from "./IndexStyles";
+import StyleMainLayout from "./StyleMainLayout";
+import Head from 'next/head'
+
 
 interface IProps {
+    customHead?: React.ReactChildren | React.ReactChildren,
+    pageTitle?: string,
     children: React.ReactChildren | React.ReactChild | React.ReactNode
 }
 
-export default function MainLayout(props: IProps):JSX.Element {
+export default function MainLayout({pageTitle, customHead, children}: IProps): JSX.Element {
     return <div>
-        {props.children}
+        <Head>
+            <title>{pageTitle || 'Tekshir.uz'}</title>
+            <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
+            {customHead}
+        </Head>
+        <header>
+            <h1>Tekshir.uz</h1>
+        </header>
+        {children}
         <footer>
             <nav>
                 <ul>
-                    <li><Link href="/"><a >Bosh sahifa</a></Link></li>
-                    <li><Link href="/about"><a >Loyiha haqida</a></Link></li>
+                    <li><Link href="/"><a>Bosh sahifa</a></Link></li>
+                    <li><Link href="/about"><a>Loyiha haqida</a></Link></li>
                 </ul>
                 <style jsx>{`
                     ul{
@@ -30,6 +42,6 @@ export default function MainLayout(props: IProps):JSX.Element {
                 `}</style>
             </nav>
         </footer>
-        <IndexStyles/>
+        <StyleMainLayout/>
     </div>
 }

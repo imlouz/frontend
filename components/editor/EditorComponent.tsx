@@ -26,7 +26,7 @@ interface IProps {
 }
 
 
-function EditorComponent({value, onChange,readOnly=false, onKeyUp=(props)=>console.log("keyup",props), editor}: IProps) :JSX.Element{
+function EditorComponent({value, onChange,readOnly=false, onKeyUp, editor}: IProps) :JSX.Element{
     // const ref = ed => {
     //     editor = ed
     // }
@@ -181,7 +181,7 @@ function EditorComponent({value, onChange,readOnly=false, onKeyUp=(props)=>conso
 
     const renderBlock = (props, editor, next) => {
         const {attributes, children, node} = props
-        console.log(editor)
+        // console.log(editor)
         switch (node.type) {
             case 'block-quote':
                 return <blockquote {...attributes}>{children}</blockquote>
@@ -209,7 +209,7 @@ function EditorComponent({value, onChange,readOnly=false, onKeyUp=(props)=>conso
 
     const renderMark = (props, editor, next) => {
         const {children, mark, attributes} = props
-        console.log(editor)
+        // console.log(editor)
 
         switch (mark.type) {
             case 'bold':
@@ -226,7 +226,7 @@ function EditorComponent({value, onChange,readOnly=false, onKeyUp=(props)=>conso
     }
 
     return (<div className={"editor"}>
-        <Toolbar>
+        {!readOnly && <Toolbar>
             {renderMarkButton('bold', 'format_bold')}
             {renderMarkButton('italic', 'format_italic')}
             {renderMarkButton('underlined', 'format_underlined')}
@@ -236,7 +236,7 @@ function EditorComponent({value, onChange,readOnly=false, onKeyUp=(props)=>conso
             {renderBlockButton('block-quote', 'format_quote')}
             {renderBlockButton('numbered-list', 'format_list_numbered')}
             {renderBlockButton('bulleted-list', 'format_list_bulleted')}
-        </Toolbar>
+        </Toolbar>}
         <Editor
             spellCheck
             readOnly={readOnly}
