@@ -2,7 +2,7 @@ import React from "react"
 import { Editor } from "slate-react"
 import { Value } from "slate"
 import { isKeyHotkey } from "is-hotkey"
-import { Button, Icon, Toolbar } from "./EditorComponentHelper"
+import { Button, Icon } from "./EditorComponentHelper"
 
 const DEFAULT_NODE = "paragraph"
 
@@ -232,19 +232,6 @@ function EditorComponent({
 
     return (
         <div className={"editor"}>
-            {!readOnly && (
-                <Toolbar>
-                    {renderMarkButton("bold", "format_bold")}
-                    {renderMarkButton("italic", "format_italic")}
-                    {renderMarkButton("underlined", "format_underlined")}
-                    {renderMarkButton("code", "code")}
-                    {renderBlockButton("heading-one", "looks_one")}
-                    {renderBlockButton("heading-two", "looks_two")}
-                    {renderBlockButton("block-quote", "format_quote")}
-                    {renderBlockButton("numbered-list", "format_list_numbered")}
-                    {renderBlockButton("bulleted-list", "format_list_bulleted")}
-                </Toolbar>
-            )}
             <Editor
                 spellCheck
                 readOnly={readOnly}
