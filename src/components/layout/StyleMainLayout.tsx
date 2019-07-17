@@ -2,7 +2,7 @@ import React from "react"
 
 export default function IndexStyle(): JSX.Element {
     return (
-        <>
+        <div>
             <style jsx>
                 {`
                     html,
@@ -14,7 +14,7 @@ export default function IndexStyle(): JSX.Element {
                     }
 
                     body {
-                        margin: 0;
+                        margin: 0 !import;
                     }
 
                     p {
@@ -82,6 +82,6 @@ export default function IndexStyle(): JSX.Element {
                     }
                 `}
             </style>
-        </>
+        </div>
     )
 }
