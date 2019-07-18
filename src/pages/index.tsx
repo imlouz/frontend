@@ -26,18 +26,14 @@ export default function IndexPage(): JSX.Element {
 
     return (
         <MainLayout pageTitle="Tekshir.uz">
-            <FlexBox>
-                <div style={{ width: "50%" }}>
+            <FlexBox style={{justifyContent:"space-between"}}>
                     <EditorComponent
                         editor={leftEditor}
                         value={leftValue}
                         onChange={onLeftChange}
                         onContentChange={convertToRight}
                     />
-                </div>
-                <div style={{ width: "50%", paddingLeft: 60 }}>
                     <EditorComponent editor={rightEditor} value={rightValue} readOnly />
-                </div>
             </FlexBox>
         </MainLayout>
     )

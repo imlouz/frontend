@@ -1,7 +1,9 @@
 import React from "react"
-import Link from "next/link"
-import StyleMainLayout from "./StyleMainLayout"
 import Head from "next/head"
+import Header from "./Header";
+import Footer from "./Footer";
+import ContainerBox from "../box/ContainerBox";
+import FlexBox from "../box/FlexBox";
 
 interface IProps {
     customHead?: React.ReactChildren | React.ReactChildren
@@ -9,51 +11,101 @@ interface IProps {
     children: React.ReactChildren | React.ReactChild | React.ReactNode
 }
 
-export default function MainLayout({ pageTitle, customHead, children }: IProps): JSX.Element {
+export default function MainLayout({pageTitle, customHead, children}: IProps): JSX.Element {
     return (
-        <div>
+        <FlexBox direction="column" style={{minHeight:'100vh'}}>
             <Head>
                 <title>{pageTitle || "Tekshir.uz"}</title>
                 <link
                     href="https://fonts.googleapis.com/icon?family=Material+Icons"
                     rel="stylesheet"
                 />
+                <meta name="viewport" content="width=device-width, initial-scale=1"/>
+                <meta charSet="utf-8"/>
                 {customHead}
             </Head>
-            <header>
-                <h1>Tekshir.uz</h1>
-            </header>
-            {children}
-            <footer>
-                <nav>
-                    <ul>
-                        <li>
-                            <Link href="/">
-                                <a>Bosh sahifa</a>
-                            </Link>
-                        </li>
-                        <li>
-                            <Link href="/about">
-                                <a>Loyiha haqida</a>
-                            </Link>
-                        </li>
-                    </ul>
-                    <style jsx>{`
-                        ul {
-                            list-style: none;
-                            padding: 0;
-                            margin: 0;
-                            display: flex;
-                            align-items: center;
-                            justify-content: center;
-                        }
-                        ul > li {
-                            padding: 10px;
-                        }
-                    `}</style>
-                </nav>
-            </footer>
-            <StyleMainLayout />
-        </div>
+            <Header/>
+            <ContainerBox className="main-container">
+                {children}
+            </ContainerBox>
+            <Footer/>
+            <style jsx global>
+                {`
+                    body {
+                        margin: 0;
+                    }
+                    html,
+                    input,
+                    textarea {
+                        font-family: "Roboto", sans-serif;
+                        line-height: 1.4;
+                        background: #fbfcfe;
+                    }
+                     p {
+                        margin: 0;
+                    }
+
+                    pre {
+                        padding: 10px;
+                        background-color: #eee;
+                        white-space: pre-wrap;
+                    }
+
+                    :not(pre) > code {
+                        font-family: monospace;
+                        // background-color: #eee;
+                        padding: 3px;
+                    }
+
+                    img {
+                        max-width: 100%;
+                        max-height: 20em;
+                    }
+
+                    blockquote {
+                        border-left: 2px solid #ddd;
+                        margin-left: 0;
+                        margin-right: 0;
+                        padding-left: 10px;
+                        color: #aaa;
+                        font-style: italic;
+                    }
+
+                    blockquote[dir="rtl"] {
+                        border-left: none;
+                        padding-left: 0;
+                        padding-right: 10px;
+                        border-right: 2px solid #ddd;
+                    }
+
+                    table {
+                        border-collapse: collapse;
+                    }
+
+                    td {
+                        padding: 10px;
+                        border: 2px solid #ddd;
+                    }
+
+                    input {
+                        box-sizing: border-box;
+                        font-size: 0.85em;
+                        width: 100%;
+                        padding: 0.5em;
+                        border: 2px solid #ddd;
+                        background: #fafafa;
+                    }
+
+                    input:focus {
+                        outline: 0;
+                        border-color: blue;
+                    }
+
+                    [data-slate-editor] > * + * {
+                        margin-top: 1em;
+                    }
+                `}
+            </style>
+        </FlexBox>
     )
 }
