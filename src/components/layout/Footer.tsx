@@ -9,7 +9,7 @@ export default function Footer() {
             <ContainerBox>
                 <FlexBox>
                     <p className="copyright">
-                        Imlo.uz 2019
+                        © Imlo.uz 2019. Barcha huquqlar himoyalangan.
                     </p>
                     <nav className="footer-menu">
                         <ul>

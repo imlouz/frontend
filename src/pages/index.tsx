@@ -1,7 +1,7 @@
-import React, { useCallback, useRef, useState } from "react"
-import { debounce } from "lodash"
+import React, {useCallback, useRef, useState} from "react"
+import {debounce} from "lodash"
 import EditorComponent from "../components/editor/EditorComponent"
-import { Value } from "slate"
+import {Value} from "slate"
 import initialJson from "../components/editor/editor_value.json"
 import MainLayout from "../components/layout/MainLayout"
 import * as editorUtils from "../helpers/editorUtils"
@@ -20,20 +20,26 @@ export default function IndexPage(): JSX.Element {
         []
     )
 
-    const onLeftChange = useCallback(({ value }) => {
+    const onLeftChange = useCallback(({value}) => {
         setLeftValue(value)
-    }, [])
+    }, [leftValue])
 
     return (
         <MainLayout pageTitle="Tekshir.uz">
-            <FlexBox style={{justifyContent:"space-between"}}>
-                    <EditorComponent
-                        editor={leftEditor}
-                        value={leftValue}
-                        onChange={onLeftChange}
-                        onContentChange={convertToRight}
-                    />
-                    <EditorComponent editor={rightEditor} value={rightValue} readOnly />
+            <FlexBox style={{justifyContent: "space-between"}}>
+                <EditorComponent
+                    editor={leftEditor}
+                    placeholder="Matnni bu yerga kiriting"
+                    autoFocus={true}
+                    value={leftValue}
+                    onChange={onLeftChange}
+                    onContentChange={convertToRight}
+                />
+                <EditorComponent
+                    placeholder="Oʻgirilgan matn bu yerda chiqadi"
+                    editor={rightEditor}
+                    value={rightValue}
+                    readOnly/>
             </FlexBox>
         </MainLayout>
     )
