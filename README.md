@@ -1,7 +1,15 @@
-# Imlo.uz Front-end qismi
-Ushbu loyiha `React` orqali qilingan. 
-1) [node.js](https://nodejs.org/en/) ning o'rnatasiz. 
-2) [yarn](https://yarnpkg.com/lang/en/docs/install) paket menejeri ni o'rnatasiz
+# Imlo.uz loyihasi
+Oʻzbek tilidagi matnlarni imlo qoidasi boʻyicha tekshirishga moʻljallangan tizim loyihasi
+
+Ushbu loyiha bir guruh tashabbuskorlar tomonidan ishlab chiqilmoqda. Loyiha oʻzida tijoriy maqsadlarni koʻzlamagan, yaʼni oʻzbek tilidagi matnlarni imlo qoidasi boʻyicha tekshirishga moʻljallangan ushbu tizimdan foydalanish bepul (Open Source) boʻladi va umrbod shunday boʻlib qoladi. Kelgusida ushbu tizim uchun API ishlab chiqilib, uning asosida oʻzlarining boshqa loyihalarini yaratmoqchi boʻlganlarga ham bepul taqdim etiladi.
+
+Shuningdek, loyiha natijasida yaratiladigan sayt, tizim hamda soʻzlar bazasi va dasturiy kutubxonalar Github, Gitlab kabi ochiq kodli dasturiy mahsulotlar repozitoriyasiga chiqariladi. Yaʼni nafaqat servisdan foydalanish bepul, balki servis dasturining kodi va bazasi ham ochiq boʻladi.
+
+Maqsad – xalq orasida savodxonlikni keng targʻib qilish, jamoatchilikka imlo qoidasi boʻyicha toʻgʻri yoza olish uchun zamonaviy imkoniyatlardan foydalanib koʻmak berish. 
+
+Loyiha bosqichma-bosqich amalga oshiriladi. Tayyor boʻlgan bosqich eʼlon qilinib, keyingi bosqichlarda qilingan ishlar orqali doimiy yangilanib borilaveradi.
+
+Ushbu repository loyihaning UI(front-end) qismi uchun mo'ljallangan.
 
 ##  Dasturlash jarayoni uchun
 
