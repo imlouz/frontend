@@ -2,8 +2,12 @@ import React from "react";
 import FlexBox from "../box/FlexBox";
 import Link from "next/link";
 import ContainerBox from "../box/ContainerBox";
+import {useRouter} from 'next/router';
+import {eq} from "lodash";
 
 export default function Footer() {
+    const {route} = useRouter();
+    console.log("r --- ", route);
     return (
         <footer className="main-footer">
             <ContainerBox>
@@ -13,16 +17,16 @@ export default function Footer() {
                     </p>
                     <nav className="footer-menu">
                         <ul>
-                            <li>
+                            {!eq(route, '/') && <li>
                                 <Link href="/">
                                     <a>Bosh sahifa</a>
                                 </Link>
-                            </li>
-                            <li>
+                            </li>}
+                            {!eq(route, '/about') && <li>
                                 <Link href="/about">
                                     <a>Loyiha haqida</a>
                                 </Link>
-                            </li>
+                            </li>}
                         </ul>
                     </nav>
                 </FlexBox>
