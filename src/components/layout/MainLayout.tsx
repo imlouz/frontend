@@ -13,7 +13,7 @@ interface IProps {
 
 export default function MainLayout({pageTitle, customHead, children}: IProps): JSX.Element {
     return (
-        <FlexBox direction="column" style={{minHeight:'100vh'}}>
+        <FlexBox direction="column" style={{minHeight: '100vh'}}>
             <Head>
                 <title>{pageTitle || "Tekshir.uz"}</title>
                 <link
@@ -39,10 +39,10 @@ export default function MainLayout({pageTitle, customHead, children}: IProps): J
                     textarea {
                         font-family: "Roboto", sans-serif;
                         line-height: 1.4;
-                        background: #fbfcfe;
+                        background: #FDFDFD;
                     }
                      p {
-                        margin: 0;
+                        margin: 0 0 15px;
                     }
 
                     pre {

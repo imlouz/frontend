@@ -21,6 +21,8 @@ interface IProps {
     value: Value
     editor: any
     readOnly?: boolean
+    placeholder?: string
+    autoFocus?: boolean
     onChange?: (Value) => void
     onContentChange?: () => void
 }
@@ -28,21 +30,12 @@ interface IProps {
 function EditorComponent({
                              value,
                              onChange,
+                             placeholder = "",
                              readOnly = false,
+                             autoFocus = false,
                              editor,
                              onContentChange
                          }: IProps): JSX.Element {
-    // const ref = ed => {
-    //     editor = ed
-    // }
-    // const hasMark = type => {
-    //     return value.activeMarks.some(mark => mark.type === type)
-    // }
-    //
-    // const hasBlock = type => {
-    //     return value.blocks.some(node => node.type === type)
-    // }
-
     const onKeyDown = (event, tempEditor, next) => {
         let mark
 
@@ -67,113 +60,6 @@ function EditorComponent({
 
         onContentChange()
     }
-
-    /**
-     * When a mark button is clicked, toggle the current mark.
-     *
-     * @param {Event} event
-     * @param {String} type
-     */
-
-    // const onClickMark = (event, type) => {
-    //     event.preventDefault()
-    //     editor.current.toggleMark(type)
-    //     onContentChange()
-    // }
-    //
-    // /**
-    //  * When a block button is clicked, toggle the block type.
-    //  *
-    //  * @param {Event} event
-    //  * @param {String} type
-    //  */
-    //
-    // const onClickBlock = (event, type) => {
-    //     event.preventDefault()
-    //     const tempEditor = editor.current
-    //     const { value } = tempEditor
-    //     const { document } = value
-    //
-    //     // Handle everything but list buttons.
-    //     if (type !== "bulleted-list" && type !== "numbered-list") {
-    //         const isActive = hasBlock(type)
-    //         const isList = hasBlock("list-item")
-    //
-    //         if (isList) {
-    //             tempEditor
-    //                 .setBlocks(isActive ? DEFAULT_NODE : type)
-    //                 .unwrapBlock("bulleted-list")
-    //                 .unwrapBlock("numbered-list")
-    //         } else {
-    //             tempEditor.setBlocks(isActive ? DEFAULT_NODE : type)
-    //         }
-    //     } else {
-    //         // Handle the extra wrapping required for list buttons.
-    //         const isList = hasBlock("list-item")
-    //         const isType = value.blocks.some(block => {
-    //             return !!document.getClosest(block.key, parent => parent.type === type)
-    //         })
-    //
-    //         if (isList && isType) {
-    //             tempEditor
-    //                 .setBlocks(DEFAULT_NODE)
-    //                 .unwrapBlock("bulleted-list")
-    //                 .unwrapBlock("numbered-list")
-    //         } else if (isList) {
-    //             tempEditor
-    //                 .unwrapBlock(type === "bulleted-list" ? "numbered-list" : "bulleted-list")
-    //                 .wrapBlock(type)
-    //         } else {
-    //             tempEditor.setBlocks("list-item").wrapBlock(type)
-    //         }
-    //     }
-    //
-    //     onContentChange()
-    // }
-    // /**
-    //  * Render a mark-toggling toolbar button.
-    //  *
-    //  * @param {String} type
-    //  * @param {String} icon
-    //  * @return {Element}
-    //  */
-    //
-    // const renderMarkButton = (type, icon) => {
-    //     const isActive = hasMark(type)
-    //
-    //     return (
-    //         <Button active={isActive} onMouseDown={event => onClickMark(event, type)}>
-    //             <Icon>{icon}</Icon>
-    //         </Button>
-    //     )
-    // }
-    //
-    // /**
-    //  * Render a block-toggling toolbar button.
-    //  *
-    //  * @param {String} type
-    //  * @param {String} icon
-    //  * @return {Element}
-    //  */
-    //
-    // const renderBlockButton = (type, icon) => {
-    //     let isActive = hasBlock(type)
-    //
-    //     if (["numbered-list", "bulleted-list"].includes(type)) {
-    //         const { document, blocks } = value
-    //
-    //         if (blocks.size > 0) {
-    //             const parent: any = document.getParent(blocks.first().key)
-    //             isActive = hasBlock("list-item") && parent && parent.type === type
-    //         }
-    //     }
-    //
-    //     return (
-    //         <Button active={isActive} onMouseDown={event => onClickBlock(event, type)}>
-    //             <Icon>{icon}</Icon>
-    //         </Button>
-    //     )
-    // }
 
     /**
      * Render a Slate block.
@@ -233,18 +119,14 @@ function EditorComponent({
     return (
         <div className="editor-box">
             <Editor
-                spellCheck
                 className="editor"
                 readOnly={readOnly}
-                autoFocus
-                placeholder="Enter some plain text..."
+                autoFocus={autoFocus}
+                placeholder={placeholder}
                 value={value}
                 ref={editor}
                 onChange={onChange}
-                onKeyDown={onKeyDown}
                 onKeyUp={onKeyUp}
-                renderBlock={renderBlock}
-                renderMark={renderMark}
                 style={{
                     padding: 20,
                     minHeight: 250
@@ -255,10 +137,11 @@ function EditorComponent({
                    width: 50%;
                    background-color: white;
                    position: relative;
-                   margin-right: 5px;
+                   margin-right: 7px;
+                   box-shadow: 0 1px 3px -1px rgba(0,0,0,0.4);
                 }
                 .editor-box + .editor-box {
-                    margin-left: 5px;
+                    margin-left: 7px;
                     margin-right: 0;
                 }
             `}</style>
