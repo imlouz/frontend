@@ -3,6 +3,9 @@ import {Editor} from "slate-react"
 import {Value} from "slate"
 import {isKeyHotkey} from "is-hotkey"
 import {Button, Icon} from "./EditorComponentHelper"
+import CopySVG from "../icons/CopySVG";
+import FlexBox from "../box/FlexBox";
+import CloseSVG from "../icons/CloseSVG";
 
 const DEFAULT_NODE = "paragraph"
 
@@ -24,7 +27,9 @@ interface IProps {
     placeholder?: string
     autoFocus?: boolean
     onChange?: (Value) => void
-    onContentChange?: () => void
+    onContentChange?: () => void,
+    hasClearBtn?: boolean,
+    hasCloneBtn?: boolean,
 }
 
 function EditorComponent({
@@ -32,6 +37,8 @@ function EditorComponent({
                              onChange,
                              placeholder = "",
                              readOnly = false,
+                             hasClearBtn = false,
+                             hasCloneBtn = true,
                              autoFocus = false,
                              editor,
                              onContentChange
@@ -129,20 +136,53 @@ function EditorComponent({
                 onKeyUp={onKeyUp}
                 style={{
                     padding: 20,
-                    minHeight: 250
+                    minHeight: 280,
+                    color: "#4a4a4a",
+                    paddingRight: hasClearBtn ? 40 : 20
                 }}
             />
-            <style jsx>{`
+            {hasClearBtn && <button className="close-button">
+                <CloseSVG  color="#8d9aaf"/>
+            </button>}
+            {hasCloneBtn && <FlexBox className="editor-actions">
+                <button>
+                    <CopySVG color="#8d9aaf"/>
+                    <style>{`
+                    .editor-actions{
+                        padding: 0 20px 15px;
+                    }
+                    
+                    .editor-actions button:focus{
+                        outline: none;
+                    }
+                `}</style>
+                </button>
+            </FlexBox>}
+            <style>{`
                 .editor-box{
                    width: 50%;
                    background-color: white;
                    position: relative;
                    margin-right: 7px;
-                   box-shadow: inset 0 0 2px -1px rgba(0,0,0,0.4);
+                   box-shadow: 0 1px 3px -1px rgba(0,0,0,0.1);
+                   border-radius: 4px;
                 }
+                .editor-box button{
+                    border:none;
+                    background:transparent;
+                }
+                    
                 .editor-box + .editor-box {
                     margin-left: 7px;
                     margin-right: 0;
+                }
+                .editor-box .editor{
+                    border-radius: 4px
+                }
+                .editor-box .close-button{
+                    position:absolute;
+                    top: 17px;
+                    right: 10px;
                 }
             `}</style>
         </div>
