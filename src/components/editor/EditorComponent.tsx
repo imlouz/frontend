@@ -138,7 +138,7 @@ function EditorComponent({
                    background-color: white;
                    position: relative;
                    margin-right: 7px;
-                   box-shadow: 0 1px 3px -1px rgba(0,0,0,0.4);
+                   box-shadow: inset 0 0 2px -1px rgba(0,0,0,0.4);
                 }
                 .editor-box + .editor-box {
                     margin-left: 7px;
