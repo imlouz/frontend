@@ -2,10 +2,12 @@ import React from "react"
 import {Editor} from "slate-react"
 import {Value} from "slate"
 import {isKeyHotkey} from "is-hotkey"
-import {Button, Icon} from "./EditorComponentHelper"
 import CopySVG from "../icons/CopySVG";
 import FlexBox from "../box/FlexBox";
 import CloseSVG from "../icons/CloseSVG";
+import initialJson from "./editor_value.json";
+
+const initialValue = Value.fromJSON(initialJson)
 
 const DEFAULT_NODE = "paragraph"
 
@@ -79,6 +81,8 @@ function EditorComponent({
 
     const renderBlock = (props, tempEditor, next) => {
         const {attributes, children, node} = props
+        console.log(tempEditor)
+
         // console.log(editor)
         switch (node.type) {
             case "block-quote":
@@ -107,7 +111,7 @@ function EditorComponent({
 
     const renderMark = (props, tempEditor, next) => {
         const {children, mark, attributes} = props
-        // console.log(editor)
+        console.log(tempEditor)
 
         switch (mark.type) {
             case "bold":
@@ -129,6 +133,9 @@ function EditorComponent({
                 className="editor"
                 readOnly={readOnly}
                 autoFocus={autoFocus}
+                onKeyDown={onKeyDown}
+                renderMark={renderMark}
+                renderBlock={renderBlock}
                 placeholder={placeholder}
                 value={value}
                 ref={editor}
@@ -141,7 +148,11 @@ function EditorComponent({
                     paddingRight: hasClearBtn ? 40 : 20
                 }}
             />
-            {hasClearBtn && <button className="close-button">
+            {hasClearBtn && <button className="close-button"
+                                    onClick={() => {
+                                        onChange({value: initialValue})
+                                    }}
+            >
                 <CloseSVG  color="#8d9aaf"/>
             </button>}
             {hasCloneBtn && <FlexBox className="editor-actions">
@@ -151,10 +162,7 @@ function EditorComponent({
                     .editor-actions{
                         padding: 0 20px 15px;
                     }
-                    
-                    .editor-actions button:focus{
-                        outline: none;
-                    }
+
                 `}</style>
                 </button>
             </FlexBox>}
@@ -170,6 +178,10 @@ function EditorComponent({
                 .editor-box button{
                     border:none;
                     background:transparent;
+                }
+
+                .editor-box button:focus{
+                    outline: none;
                 }
                     
                 .editor-box + .editor-box {
