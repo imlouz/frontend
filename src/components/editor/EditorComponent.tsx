@@ -2,7 +2,12 @@ import React from "react"
 import {Editor} from "slate-react"
 import {Value} from "slate"
 import {isKeyHotkey} from "is-hotkey"
-import {Button, Icon} from "./EditorComponentHelper"
+import CopySVG from "../icons/CopySVG";
+import FlexBox from "../box/FlexBox";
+import CloseSVG from "../icons/CloseSVG";
+import initialJson from "./editor_value.json";
+
+const initialValue = Value.fromJSON(initialJson)
 
 const DEFAULT_NODE = "paragraph"
 
@@ -24,14 +29,20 @@ interface IProps {
     placeholder?: string
     autoFocus?: boolean
     onChange?: (Value) => void
-    onContentChange?: () => void
+    onClear?: () => void
+    onContentChange?: () => void,
+    hasClearBtn?: boolean,
+    hasCloneBtn?: boolean,
 }
 
 function EditorComponent({
                              value,
                              onChange,
+                             onClear,
                              placeholder = "",
                              readOnly = false,
+                             hasClearBtn = false,
+                             hasCloneBtn = true,
                              autoFocus = false,
                              editor,
                              onContentChange
@@ -72,6 +83,8 @@ function EditorComponent({
 
     const renderBlock = (props, tempEditor, next) => {
         const {attributes, children, node} = props
+        console.log(tempEditor)
+
         // console.log(editor)
         switch (node.type) {
             case "block-quote":
@@ -100,7 +113,7 @@ function EditorComponent({
 
     const renderMark = (props, tempEditor, next) => {
         const {children, mark, attributes} = props
-        // console.log(editor)
+        console.log(tempEditor)
 
         switch (mark.type) {
             case "bold":
@@ -122,6 +135,9 @@ function EditorComponent({
                 className="editor"
                 readOnly={readOnly}
                 autoFocus={autoFocus}
+                onKeyDown={onKeyDown}
+                renderMark={renderMark}
+                renderBlock={renderBlock}
                 placeholder={placeholder}
                 value={value}
                 ref={editor}
@@ -129,20 +145,62 @@ function EditorComponent({
                 onKeyUp={onKeyUp}
                 style={{
                     padding: 20,
-                    minHeight: 250
+                    minHeight: 280,
+                    color: "#4a4a4a",
+                    paddingRight: hasClearBtn ? 40 : 20
                 }}
             />
-            <style jsx>{`
+            {hasClearBtn && <button className="close-button"
+                                    onClick={() => {
+                                        if (onClear) {
+                                            onClear()
+                                        } else {
+                                            onChange({value: initialValue})
+                                        }
+                                    }}
+            >
+                <CloseSVG  color="#8d9aaf"/>
+            </button>}
+            {hasCloneBtn && <FlexBox className="editor-actions">
+                <button>
+                    <CopySVG color="#8d9aaf"/>
+                    <style>{`
+                    .editor-actions{
+                        padding: 0 20px 15px;
+                    }
+
+                `}</style>
+                </button>
+            </FlexBox>}
+            <style>{`
                 .editor-box{
                    width: 50%;
                    background-color: white;
                    position: relative;
                    margin-right: 7px;
-                   box-shadow: 0 1px 3px -1px rgba(0,0,0,0.4);
+                   box-shadow: 0 1px 3px -1px rgba(0,0,0,0.1);
+                   border-radius: 4px;
                 }
+                .editor-box button{
+                    border:none;
+                    background:transparent;
+                }
+
+                .editor-box button:focus{
+                    outline: none;
+                }
+                    
                 .editor-box + .editor-box {
                     margin-left: 7px;
                     margin-right: 0;
+                }
+                .editor-box .editor{
+                    border-radius: 4px
+                }
+                .editor-box .close-button{
+                    position:absolute;
+                    top: 17px;
+                    right: 10px;
                 }
             `}</style>
         </div>

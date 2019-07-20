@@ -2,7 +2,7 @@ import React from "react"
 import {FlexDirectionProperty, FlexWrapProperty} from "csstype"
 
 interface IProps {
-    children: React.ReactNode
+    children: React.ReactChildren | React.ReactChild | React.ReactNode
     style?: object,
     className?: string
     direction?: FlexDirectionProperty
@@ -10,7 +10,7 @@ interface IProps {
     flex?: number | string
 }
 
-export default function FlexBox({className="", children, style, ...styleProps}: IProps): JSX.Element {
+export default function FlexBox({className = "", children, style, ...styleProps}: IProps): JSX.Element {
     return (
         <div
             className={`flex-box ${className}`}
