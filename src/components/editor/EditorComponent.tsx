@@ -29,6 +29,7 @@ interface IProps {
     placeholder?: string
     autoFocus?: boolean
     onChange?: (Value) => void
+    onClear?: () => void
     onContentChange?: () => void,
     hasClearBtn?: boolean,
     hasCloneBtn?: boolean,
@@ -37,6 +38,7 @@ interface IProps {
 function EditorComponent({
                              value,
                              onChange,
+                             onClear,
                              placeholder = "",
                              readOnly = false,
                              hasClearBtn = false,
@@ -150,7 +152,11 @@ function EditorComponent({
             />
             {hasClearBtn && <button className="close-button"
                                     onClick={() => {
-                                        onChange({value: initialValue})
+                                        if (onClear) {
+                                            onClear()
+                                        } else {
+                                            onChange({value: initialValue})
+                                        }
                                     }}
             >
                 <CloseSVG  color="#8d9aaf"/>

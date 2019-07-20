@@ -8,7 +8,7 @@ import * as editorUtils from "../helpers/editorUtils"
 import FlexBox from "../components/box/FlexBox"
 import CopySVG from "../components/icons/CopySVG";
 import CloseSVG from "../components/icons/CloseSVG";
-
+import {transliterateApi} from "../api/ImloApi"
 const initialValue = Value.fromJSON(initialJson)
 
 export default function IndexPage(): JSX.Element {
@@ -18,7 +18,7 @@ export default function IndexPage(): JSX.Element {
     const rightEditor = useRef<any>()
 
     const convertToRight = useCallback(
-        debounce(editorUtils.converyToCrylic(leftEditor, rightEditor), 300),
+        debounce(editorUtils.converyToCrylicWithApi(leftEditor, rightEditor), 300),
         []
     )
 
@@ -26,11 +26,18 @@ export default function IndexPage(): JSX.Element {
         setLeftValue(value)
     }, [leftValue])
 
+
+    const onClearEditors = useCallback(() => {
+        setLeftValue(initialValue)
+        setRightValue(initialValue)
+    }, [])
+
     return (
         <MainLayout pageTitle="Tekshir.uz">
             <FlexBox style={{justifyContent: "space-between"}}>
                 <EditorComponent
                     editor={leftEditor}
+                    onClear={onClearEditors}
                     placeholder="Matnni bu yerga kiriting"
                     autoFocus={true}
                     hasClearBtn={true}
@@ -42,7 +49,7 @@ export default function IndexPage(): JSX.Element {
                     placeholder="Oʻgirilgan matn bu yerda chiqadi"
                     editor={rightEditor}
                     value={rightValue}
-                    readOnly/>
+                    />
             </FlexBox>
         </MainLayout>
     )
