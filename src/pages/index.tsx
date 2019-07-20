@@ -6,9 +6,6 @@ import initialJson from "../components/editor/editor_value.json"
 import MainLayout from "../components/layout/MainLayout"
 import * as editorUtils from "../helpers/editorUtils"
 import FlexBox from "../components/box/FlexBox"
-import CopySVG from "../components/icons/CopySVG";
-import CloseSVG from "../components/icons/CloseSVG";
-import {transliterateApi} from "../api/ImloApi"
 const initialValue = Value.fromJSON(initialJson)
 
 export default function IndexPage(): JSX.Element {
