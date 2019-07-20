@@ -1,20 +1,21 @@
-import axios from "axios";
-
 const API_HOST = "https://api.tekshir.uz/";
 
-export const config = (path: string, method: string) => (data?: object, headers: any = {}) => {
+import axios, {Method} from "axios";
 
-    // @ts-ignore
-    return axios({
-        url: path,
-        baseURL: API_HOST,
-        method,
-        data,
-        headers: {
-            "Accept": "application/json",
-            ...headers
-        }
-    })
+export const config = (path: any, method: Method) => {
+    return (data?: object, headers: any = {}) => {
+
+        return axios({
+            url: path,
+            method,
+            baseURL: API_HOST,
+            params: data,
+            headers: {
+                "Accept": "application/json",
+                ...headers
+            }
+        })
+    };
 }
 
 export const get = (path, data) => {

@@ -2,11 +2,11 @@ import * as parseUtils from "./parseUtils"
 import {transliterateApi} from "../api/ImloApi"
 
 export const converyToCrylicWithApi = (leftEditor, rightEditor) => () => {
-    let htmlContent = leftEditor.current.el.innerHTML
+    let htmlContent = leftEditor.current.el.innerText
 
     transliterateApi({content: htmlContent, direction: "lat2cyr"})
         .then(response => {
-            rightEditor.current.el.innerHTML = response.data
+            rightEditor.current.el.innerText = response.data.data
         })
 
 }
