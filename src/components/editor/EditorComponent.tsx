@@ -83,7 +83,7 @@ function EditorComponent({
 
     const renderBlock = (props, tempEditor, next) => {
         const {attributes, children, node} = props
-        console.log(tempEditor)
+        // console.log(tempEditor)
 
         // console.log(editor)
         switch (node.type) {
@@ -113,7 +113,7 @@ function EditorComponent({
 
     const renderMark = (props, tempEditor, next) => {
         const {children, mark, attributes} = props
-        console.log(tempEditor)
+        // console.log(tempEditor)
 
         switch (mark.type) {
             case "bold":
@@ -180,6 +180,9 @@ function EditorComponent({
                    margin-right: 7px;
                    box-shadow: 0 1px 3px -1px rgba(0,0,0,0.1);
                    border-radius: 4px;
+                }
+                .editor-box p{
+                    margin:0;
                 }
                 .editor-box button{
                     border:none;
