@@ -54,6 +54,11 @@ function FooterNav({currentPath}: IFooterNavProps) {
                 </MenuItem>
             </li>
             <li>
+                <MenuItem href="/policy" currentPath={currentPath}>
+                    Ommaviy offerta
+                </MenuItem>
+            </li>
+            <li>
                 <MenuItem href="/about" currentPath={currentPath}>
                     Loyiha haqida
                 </MenuItem>

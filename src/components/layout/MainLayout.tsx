@@ -102,7 +102,7 @@ export default function MainLayout({pageTitle, customHead, children}: IProps): J
                     }
 
                     [data-slate-editor] > * + * {
-                        margin-top: 1em;
+                        margin-top: 0;
                     }
                 `}
             </style>
