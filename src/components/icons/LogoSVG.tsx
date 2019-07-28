@@ -1,8 +1,14 @@
 import React from "react";
 
-export default function LogoSVG(): JSX.Element {
+const RATIO = 3.431818181818181;
+
+interface IProps {
+    height: number
+}
+
+export default function LogoSVG({height}: IProps): JSX.Element {
     return (
-        <svg xmlns="http://www.w3.org/2000/svg" width="151" height="44" viewBox="0 0 151 44">
+        <svg xmlns="http://www.w3.org/2000/svg" width={height * RATIO} height={height} viewBox="0 0 151 44">
             <g fill="none" fillRule="evenodd">
                 <path fill="#FFBB4B" d="M12 11a6 6 0 1 1-12 0 6 6 0 0 1 12 0"/>
                 <path fill="#FF4E4E" d="M32.619 11a6 6 0 1 1-12 0 6 6 0 0 1 12 0"/>

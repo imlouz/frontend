@@ -19,7 +19,7 @@ export default function Footer() {
             </ContainerBox>
             <style jsx>{`
                         .main-footer {
-                          height: 92px;
+                          height: 70px;
                           display:flex;
                           align-items:center;
                           background-color: #ffffff;

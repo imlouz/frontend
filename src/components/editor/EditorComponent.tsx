@@ -159,7 +159,7 @@ function EditorComponent({
                                         }
                                     }}
             >
-                <CloseSVG  color="#8d9aaf"/>
+                <CloseSVG color="#8d9aaf"/>
             </button>}
             {hasCloneBtn && <FlexBox className="editor-actions">
                 <button>
@@ -174,12 +174,10 @@ function EditorComponent({
             </FlexBox>}
             <style>{`
                 .editor-box{
-                   width: 50%;
                    background-color: white;
                    position: relative;
-                   margin-right: 7px;
-                   box-shadow: 0 1px 3px -1px rgba(0,0,0,0.1);
                    border-radius: 4px;
+                   box-shadow: 0 2px 5px #eff3fb, 0 10px 20px #eff3fb;
                 }
                 .editor-box p{
                     margin:0;
@@ -191,11 +189,6 @@ function EditorComponent({
 
                 .editor-box button:focus{
                     outline: none;
-                }
-                    
-                .editor-box + .editor-box {
-                    margin-left: 7px;
-                    margin-right: 0;
                 }
                 .editor-box .editor{
                     border-radius: 4px

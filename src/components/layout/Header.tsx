@@ -11,17 +11,18 @@ export default function Header() {
                 <FlexBox>
                     <Link href="/">
                         <a>
-                            <LogoSVG/>
+                            <LogoSVG height={36}/>
                         </a>
                     </Link>
                 </FlexBox>
             </ContainerBox>
             <style jsx>{`
                         .main-header {
-                          height: 92px;
+                          height: 70px;
                           display:flex;
                           align-items:center;
                           background-color: #ffffff;
+                          box-shadow: 0 2px 2px #eff3fb,0 10px 15px #eff3fb;
                         }
                     `}</style>
         </header>

@@ -6,6 +6,8 @@ import initialJson from "../components/editor/editor_value.json"
 import MainLayout from "../components/layout/MainLayout"
 import * as editorUtils from "../helpers/editorUtils"
 import FlexBox from "../components/box/FlexBox"
+import Link from "next/link";
+
 const initialValue = Value.fromJSON(initialJson)
 
 export default function IndexPage(): JSX.Element {
@@ -32,21 +34,42 @@ export default function IndexPage(): JSX.Element {
     return (
         <MainLayout pageTitle="Tekshir.uz">
             <FlexBox style={{justifyContent: "space-between"}}>
-                <EditorComponent
-                    editor={leftEditor}
-                    onClear={onClearEditors}
-                    placeholder="Matnni bu yerga kiriting"
-                    autoFocus={true}
-                    hasClearBtn={true}
-                    value={leftValue}
-                    onChange={onLeftChange}
-                    onContentChange={convertToRight}
-                />
-                <EditorComponent
-                    placeholder="Oʻgirilgan matn bu yerda chiqadi"
-                    editor={rightEditor}
-                    value={rightValue}
+                <FlexBox direction={"column"} style={{width:"49%"}}>
+                    <FlexBox className="editor-header">
+                        <Link href="/">Avtomatik tarzda</Link>
+                        <Link href="/?type=lat2cyr">Lotin</Link>
+                        <Link href="/?type=cyr2lat">Kiril</Link>
+                    </FlexBox>
+                    <EditorComponent
+                        editor={leftEditor}
+                        onClear={onClearEditors}
+                        placeholder="Matnni bu yerga kiriting"
+                        autoFocus={true}
+                        hasClearBtn={true}
+                        value={leftValue}
+                        onChange={onLeftChange}
+                        onContentChange={convertToRight}
                     />
+                </FlexBox>
+
+                <FlexBox direction={"column"} style={{width:"49%"}}>
+                    <FlexBox className="editor-header">
+                        <Link href="/?type=lat2cyr">Kiril</Link>
+                        <Link href="/?type=cyr2lat">Lotin</Link>
+                    </FlexBox>
+                    <EditorComponent
+                        placeholder="Oʻgirilgan matn bu yerda chiqadi"
+                        editor={rightEditor}
+                        value={rightValue}
+                    />
+                </FlexBox>
+                <style>{`
+                    .editor-header a{
+                        color: #8d9aaf;
+                        text-decoration: none;
+                        padding: 10px
+                    }
+                `}</style>
             </FlexBox>
         </MainLayout>
     )

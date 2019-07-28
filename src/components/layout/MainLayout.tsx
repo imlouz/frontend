@@ -33,13 +33,18 @@ export default function MainLayout({pageTitle, customHead, children}: IProps): J
                 {`
                     body {
                         margin: 0;
+                        color: #6a7990;
+                        font-size: 1rem;
+                      font-family: Roboto,Arial,Helvetica,sans-serif;
+                      font-weight: 400;
+                      line-height: 1.5;
+                      background-color: #fbfcfe;
                     }
                     html,
                     input,
                     textarea {
                         font-family: "Roboto", sans-serif;
                         line-height: 1.4;
-                        background: #FDFDFD;
                     }
                      p {
                         margin: 0 0 15px;
