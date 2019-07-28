@@ -1,5 +1,5 @@
 import React, {useCallback, useRef, useState} from "react"
-import {debounce} from "lodash"
+import {debounce, isEqual} from "lodash"
 import EditorComponent from "../components/editor/EditorComponent"
 import {Value} from "slate"
 import initialJson from "../components/editor/editor_value.json"
@@ -10,7 +10,30 @@ import Link from "next/link";
 
 const initialValue = Value.fromJSON(initialJson)
 
-export default function IndexPage(): JSX.Element {
+interface IProps {
+    url: any
+}
+
+const TABS = [
+    {
+        code: "auto",
+        query: {},
+        title: "Avtomatik aniqlash"
+    },
+    {
+        code: "lat2cyr",
+        query: {tab: "lat2cyr"},
+        title: "Lotin"
+    },
+    {
+        code: "cyr2lat",
+        query: {tab: "cyr2lat"},
+        title: "Kiril"
+    },
+]
+
+export default function IndexPage({url}: IProps): JSX.Element {
+    console.log("test === ", url)
     const [leftValue, setLeftValue] = useState<Value>(initialValue)
     const [rightValue, setRightValue] = useState<Value>(initialValue)
     const leftEditor = useRef<any>()
@@ -34,11 +57,15 @@ export default function IndexPage(): JSX.Element {
     return (
         <MainLayout pageTitle="Tekshir.uz">
             <FlexBox style={{justifyContent: "space-between"}}>
-                <FlexBox direction={"column"} style={{width:"49%"}}>
+                <FlexBox direction={"column"} style={{width: "49%"}}>
                     <FlexBox className="editor-header">
-                        <Link href="/">Avtomatik tarzda</Link>
-                        <Link href="/?type=lat2cyr">Lotin</Link>
-                        <Link href="/?type=cyr2lat">Kiril</Link>
+                        {TABS.map(tab =>
+                            <Link href={{pathname: "/", query: tab.query}}>
+                                <a className={isEqual(url.query, tab.query) ? 'active' : 'no-active'}>
+                                    {tab.title}
+                                </a>
+                            </Link>
+                        )}
                     </FlexBox>
                     <EditorComponent
                         editor={leftEditor}
@@ -52,7 +79,7 @@ export default function IndexPage(): JSX.Element {
                     />
                 </FlexBox>
 
-                <FlexBox direction={"column"} style={{width:"49%"}}>
+                <FlexBox direction={"column"} style={{width: "49%"}}>
                     <FlexBox className="editor-header">
                         <Link href="/?type=lat2cyr">Kiril</Link>
                         <Link href="/?type=cyr2lat">Lotin</Link>
@@ -67,7 +94,12 @@ export default function IndexPage(): JSX.Element {
                     .editor-header a{
                         color: #8d9aaf;
                         text-decoration: none;
-                        padding: 10px
+                        padding: 10px;
+                        
+                    }
+                    .editor-header a.active{
+                        border-bottom: 2px solid rgba(0,0,0,0.5);
+                        
                     }
                 `}</style>
             </FlexBox>

@@ -159,11 +159,11 @@ function EditorComponent({
                                         }
                                     }}
             >
-                <CloseSVG color="#8d9aaf"/>
+                <CloseSVG/>
             </button>}
             {hasCloneBtn && <FlexBox className="editor-actions">
                 <button>
-                    <CopySVG color="#8d9aaf"/>
+                    <CopySVG/>
                     <style>{`
                     .editor-actions{
                         padding: 0 20px 15px;
@@ -192,6 +192,12 @@ function EditorComponent({
                 }
                 .editor-box .editor{
                     border-radius: 4px
+                }
+                .editor-box svg{
+                    opacity: .5;
+                }
+                .editor-box button:hover svg{
+                    opacity: 1;
                 }
                 .editor-box .close-button{
                     position:absolute;
