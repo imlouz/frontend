@@ -23,7 +23,7 @@
     "express": "^4.17.1",
     "immutable": "^4.0.0-rc.12",
     "is-hotkey": "^0.1.4",
-    "next": "^9.0.1",
+    "next": "^9.3.2",
     "nodemon": "^1.19.1",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
